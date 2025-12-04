@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Твой Мио — поэтические гадания</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: linear-gradient(135deg, #1a0033, #000033); color: #fff; min-height: 100vh; font-family: 'Georgia', serif; }
+    .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+    .btn-magic { background: linear-gradient(45deg, #ff6ec4, #7873f5); border: none; padding: 15px; font-size: 1.2em; }
+    .poem { font-style: italic; font-size: 1.3em; line-height: 1.8; }
+    .emoji { font-size: 2em; }
+  </style>
+</head>
+<body class="d-flex align-items-center py-5">
+  <div class="container text-center">
+    <h1 class="mb-5">Твой Мио</h1>
+    <p class="lead mb-5">поэтические гадания на каждый день</p>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <button onclick="onePoem()" class="btn btn-magic w-100 p-4">Один стих на сегодня</button>
+      </div>
+      <div class="col-md-4">
+        <button onclick="threePoem()" class="btn btn-magic w-100 p-4">Расклад на три стиха</button>
+      </div>
+      <div class="col-md-4">
+        <button onclick="showHelp()" class="btn btn-magic w-100 p-4">Помощь</button>
+      </div>
+    </div>
+
+    <div id="result" class="mt-5 p-5 card poem"></div>
+  </div>
+
+  <script src="poems.js"></script>
+  <script>
+    const magic = ["✨", "🔮", "🌙", "🪄", "🌟", "💫", "🕯️", "🧿", "🌌", "🪬"];
+    function onePoem() {
+      const poem = poems[Math.floor(Math.random() * poems.length)];
+      document.getElementById("result").innerHTML = `
+        <p class="emoji">${magic[Math.floor(Math.random()*magic.length)]}</p>
+        <p class="poem">${poem.replace(/\n/g, "<br>")}</p>
+        <p class="emoji">${magic[Math.floor(Math.random()*magic.length)]}</p>
+      `;
+    }
+    function threePoem() {
+      let selected = [];
+      while (selected.length < 3) {
+        const p = poems[Math.floor(Math.random() * poems.length)];
+        if (!selected.includes(p)) selected.push(p);
+      }
+      document.getElementById("result").innerHTML = `
+        <h3>Расклад на три стиха</h3>
+        <p><strong>Прошлое</strong><br>${selected[0].replace(/\n/g, "<br>")}</p><hr>
+        <p><strong>Настоящее</strong><br>${selected[1].replace(/\n/g, "<br>")}</p><hr>
+        <p><strong>Будущее</strong><br>${selected[2].replace(/\n/g, "<br>")}</p>
+        <p class="emoji">Три зеркала времени. Ты в центре вселенной ${magic[Math.floor(Math.random()*magic.length)]}</p>
+      `;
+    }
+    function showHelp() {
+      document.getElementById("result").innerHTML = `
+        <p>Один стих — мгновенное предсказание на день</p>
+        <p>Расклад на три — Прошлое · Настоящее · Будущее</p>
+        <p>Помощь — ты здесь</p>
+        <p>Ты особенный. Всегда был ${magic[Math.floor(Math.random()*magic.length)]}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
